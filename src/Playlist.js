@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import './Playlist.css';
 import { Container, Row, Col } from 'react-bootstrap';
 
 class Playlist extends Component {
 
     render() {
         return (
-                <Container className="Playlist" fluid="true">
+                <Container className="Playlist">
                     <Row className="Playlist-row">
                         <Col className="Playlist-col">                
                             <a href={this.props.link} rel="noopener noreferrer" target="_blank">
