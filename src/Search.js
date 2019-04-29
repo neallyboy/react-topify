@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {FormGroup, FormControl, InputGroup} from 'react-bootstrap';
+import {FormGroup, FormControl, InputGroup, Col, Row} from 'react-bootstrap';
 import axios from 'axios';
 import Table from './Table';
+import './Search.css';
 
 class Search extends Component {
 
@@ -18,15 +19,16 @@ class Search extends Component {
 
   millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return (seconds === 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+    //var seconds = ((millis % 60000) / 1000).toFixed(0);
+    //return (seconds === 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+    return minutes;
   };
 
   async search(){
     const BASE_URL = 'https://api.spotify.com/v1/search?';
     let FETCH_URL = BASE_URL + 'q=' + encodeURIComponent(this.state.query) + '&type=playlist&limit=50';
     let PLAYLIST_URL = 'https://api.spotify.com/v1/playlists/'
-    const auth_token = 'Bearer BQC6S3WTshzdI20mypVHdExkB8Vl1rWKIKU8maAiJanC6_zGAD7tkSj4b4cePgtF9DA_RAGsHUPZic0OLL_3fBfo6WPRawkGpeK5aQUoge9rkg58K2TEQ9IqXFh_uj11BDFIsRj9dSnSF_VC';
+    const auth_token = 'Bearer BQD_Tm5xUq67B6FDsGRX7DRfg1Bt6ZxCy-CFVYzjz7ZwlnrxriVtlDwT3xn2MNtTPm8dACiBuPdHq2x6dUNgVAFUDDeaVsgTo7sMQRsBGzJxea6MFnoNvYGO2dZC5lpDxDfeKhcZubhkxKgp';
     
     let playlist = [];
 
@@ -62,15 +64,18 @@ class Search extends Component {
           cache: 'default'
         })
 
+        console.log("duration_ms:",findPlaylist.data.tracks.items.length, (!findPlaylist.data.tracks.items.track), findPlaylist.data.tracks.items)
         // Get total duration of playlist
         var totalPlaylistDuration = 0;
         for(let x= 0; x < findPlaylist.data.tracks.items.length; x++ ){
-            totalPlaylistDuration = totalPlaylistDuration + findPlaylist.data.tracks.items[x].track.duration_ms
+          //console.log(x,(!findPlaylist.data.tracks.items[x].track))
+          let trackDuration = !findPlaylist.data.tracks.items[x].track ? 0 : findPlaylist.data.tracks.items[x].track.duration_ms;
+          totalPlaylistDuration = totalPlaylistDuration + trackDuration;
         }
         
         //console.log("totalPlaylistDuration:", this.millisToMinutesAndSeconds(totalPlaylistDuration))
 
-        console.log("findPlaylist: ",findPlaylist)
+        //console.log("findPlaylist: ",findPlaylist)
 
         //Collect the needed items and push them in an empty array
         playlist.push( {
@@ -81,7 +86,7 @@ class Search extends Component {
           playListName: data[i].name,
           owner: data[i].owner.display_name,
           ownerLink: data[i].owner.external_urls.spotify,
-          description: findPlaylist.data.description.replace(/ &amp; /g, ' & ').replace(/ &quot; /g, ' " ' ),
+          description: findPlaylist.data.description.replace(/&amp; /g, ' & ').replace(/&quot; /g, ' " ' ),
           followers: findPlaylist.data.followers.total,
           totalTracks: data[i].tracks.total,
           totaltotalPlaylistDuration: this.millisToMinutesAndSeconds(totalPlaylistDuration),
@@ -113,25 +118,31 @@ class Search extends Component {
     //let sortedPlaylists = this.state.playlists.sort( ( a,b ) => a.followers - b.followers ).reverse();
     
     //console.log(sortedPlaylists);
-    
+    console.log("playlists: ",this.state.playlists);
+
     return (
       <div className="Search">
         <FormGroup className="Search-form">
-          <InputGroup size="lg">
-            <FormControl
-                type="text"
-                placeholder="Playlist Search"
-                value = { this.state.query }
-                onChange= { event => { 
-                  this.setState( { query: event.target.value } ) 
-                  } 
-                }
-                onKeyPress= { event=> {
-                  if( event.key==='Enter' )
-                    this.setState( { loading : true }, this.search);
-                }}
-            />
-          </InputGroup>
+        <Row className="justify-content-md-center">
+          <Col sm="6">
+            <InputGroup className="Search-input">
+              <FormControl
+                  size="lg"
+                  type="text"
+                  placeholder="Playlist Search"
+                  value = { this.state.query }
+                  onChange= { event => { 
+                    this.setState( { query: event.target.value } ) 
+                    } 
+                  }
+                  onKeyPress= { event=> {
+                    if( event.key==='Enter' )
+                      this.setState( { loading : true }, this.search);
+                  }}
+              />
+            </InputGroup>
+          </Col>
+        </Row>
         </FormGroup>
         <Table data={this.state.playlists} />
       </div>
@@ -140,3 +151,4 @@ class Search extends Component {
 }
 
 export default Search;
+export function millisToMinutesAndSeconds(millis){};

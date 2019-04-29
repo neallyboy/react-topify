@@ -1,0 +1,9 @@
+.Search {
+    height: 100vh;
+}
+
+.Search-spinner {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
