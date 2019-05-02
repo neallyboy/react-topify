@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {FormGroup, FormControl, InputGroup, Col, Row} from 'react-bootstrap';
+import {FormGroup, FormControl, InputGroup, Col, Row, Button} from 'react-bootstrap';
 import axios from 'axios';
 import Table from './Table';
 import './Search.css';
@@ -25,10 +25,41 @@ class Search extends Component {
   };
 
   async search(){
+
+    //Get auth_token
+
+    // const auth_url = 'https://accounts.spotify.com/api/token';
+    // const client_id = 'f9c1ab1b52e14e0fb79ba65518178935';
+    // const client_secret = '0184b790bc5a42c1b7d9d9ba65edc206';
+    // const refresh_token = 'BQA9XsXzuR7dlCHTgZ-QAU_xylvdcA9kuJrRtGsW8-LNtJ5DRre8IbGDWqrIcYiJakhCpafdOo7XabAmBzgBhDf_3LV86Nnnkkb-oGFxDNOoHqTT50tI_skla0CzZGfAHlKphfxLQuk6livn';
+
+    // let auth_response = await axios({
+    //   method: 'post',
+    //   url: auth_url,
+    //   data: `grant_type=refresh_token&refresh_token=${refresh_token}`,
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'Authorization': 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64') // client id and secret from env
+    //   },
+    //   mode: 'cors',
+    //   cache: 'default'
+    // });
+
+    // console.log(auth_response);
+    // let auth_token = `Bearer ${auth_response.data.access_token}`;
+    // console.log(auth_token);
+
+    
+
+    // const BASE_URL = 'https://api.spotify.com/v1/search?';
+    // let FETCH_URL = BASE_URL + 'q=' + encodeURIComponent(this.state.query) + '&type=playlist&limit=50';
+    // let PLAYLIST_URL = 'https://api.spotify.com/v1/playlists/'
+
+
     const BASE_URL = 'https://api.spotify.com/v1/search?';
     let FETCH_URL = BASE_URL + 'q=' + encodeURIComponent(this.state.query) + '&type=playlist&limit=50';
     let PLAYLIST_URL = 'https://api.spotify.com/v1/playlists/'
-    const auth_token = 'Bearer BQD_Tm5xUq67B6FDsGRX7DRfg1Bt6ZxCy-CFVYzjz7ZwlnrxriVtlDwT3xn2MNtTPm8dACiBuPdHq2x6dUNgVAFUDDeaVsgTo7sMQRsBGzJxea6MFnoNvYGO2dZC5lpDxDfeKhcZubhkxKgp';
+    const auth_token = 'Bearer ' + this.props.accessToken;
     
     let playlist = [];
 
@@ -46,7 +77,7 @@ class Search extends Component {
     //Get the simplified playlist objects
     let data = await response.data.playlists.items;
     
-    //console.log(data)
+    console.log(data)
     
     //Loop through the data array containing the responses
     for(let i= 0; i < data.length; i++){
@@ -144,7 +175,7 @@ class Search extends Component {
           </Col>
         </Row>
         </FormGroup>
-        <Table data={this.state.playlists} />
+        <Table data={this.state.playlists} access={this.auth_token}/>
       </div>
     );
   }

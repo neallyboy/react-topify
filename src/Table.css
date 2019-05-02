@@ -1,3 +1,8 @@
+.Table{
+  text-align: center;
+  width: 98%;
+}
+
 .-header {
     font-size: 1.5em;
   }
@@ -24,6 +29,17 @@
     box-shadow: 7px 10px 12px -5px rgba(0,0,0,0.56);
 }
 
-.Table-button {
+.Table a {
     cursor: pointer;
+}
+
+.overlay {
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay:hover {
+  opacity: 1;
+  transform: scale(50);
+  z-index:10;
+  position: absolute;
 }
