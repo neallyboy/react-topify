@@ -5,17 +5,41 @@ import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import './Table.css';
+//import axios from 'axios';
 
 class Table extends React.Component {
   constructor(props){
     super(props);
       this.state={
+        playPopUp:false,
         playingUrl:'',
         audio:null,
         playing:false,
         buttonText:"Stop Preview"
-      }
+      };
+      // this.followPlaylist = this.followPlaylist.bind(this);
+      this.playAudio = this.playAudio.bind(this);
     }
+
+  // async followPlaylist(id){
+  //   const BASE_URL = 'https://api.spotify.com/v1/playlists/';
+  //   let PUT_URL = BASE_URL + id + 'followers';
+  //   const auth_token = 'Bearer BQDfnlLMK4JlE5lckmd-0kzNRwiu1edX5ZmCWn5WRRyX96jG_exWGRAaxSv7bcSjN6KiIpoc3y3KFdEvxxTIJXLatwHPaqYGrYYWKLCZXm1nUA4CnDQorBt6qIDz7L-WTLItUZQjPLpQJLoBM_Rk1gNnOMKehShxXoPR6IS_zNQxgYtA61nmdUxSjmRh-D1Nt-obXHy6EkThzi2qy7WHwif_onA';
+    
+  //   let response = await axios.put( PUT_URL, {
+  //     headers : {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': auth_token,
+  //     },
+  //     public: false
+  //   })
+    
+  //   console.log(response)
+    
+  //   //Get the simplified playlist objects
+  //   //let data = await response.data.playlists.items;
+
+  // }
   
   playAudio(previewUrl){
     let audio= new Audio(previewUrl);
@@ -58,30 +82,26 @@ class Table extends React.Component {
 
 
     return (
-      <div>
+      <div className="Table">
         <ReactTable
           data={this.props.data}
           columns={[
                 {
                   Header: "Playlist Image",
                     Cell: (row) => {
-                        // let buttonText = '';
-                        // if (this.state.playing === false) {
-                        //   buttonText = "Play Preview";
-                        // } else {
-                        //   buttonText = "Stop Preview";
-                        // }
                         return  <div>
-                                  <Card className="Table-card card text-center" style={{ width: "18rem" }}>
-                                    <Card.Img variant="top" src={row.original.imgUrl} />
+                                  <Card className="Table-card card text-center" style={{ width: "15rem" }}>
+                                    <Card.Img variant="top" src={row.original.imgUrl } />
                                     <Card.Body>
                                       <Button
                                         className="Table-button"
                                         block 
                                         variant="primary" 
                                         disabled={(!row.original.previewUrl) ? true : false }
-                                        //href={row.original.previewUrl}
-                                        onClick={() => this.playAudio(row.original.previewUrl)}
+                                        onClick={() => {
+                                          this.playAudio(row.original.previewUrl);
+
+                                        }}
                                       >
                                         { (!row.original.previewUrl) ? "No Preview Available" 
                                           : this.state.playing === true & row.original.previewUrl === this.state.playingUrl ? "Stop Preview" 
@@ -95,13 +115,18 @@ class Table extends React.Component {
                 {
                   Header: "Playlist Name",
                   accessor: "playListName",
-                  Cell: e => <a href={e.original.link} rel="noopener noreferrer" target="_blank">{e.value}</a>,
+                  Cell: e =>  <div>
+                                <div><a href={e.original.link} rel="noopener noreferrer" target="_blank">{e.value}</a></div>
+                                {/* <br></br>
+                                <Button
+                                  className="Table-button"
+                                  variant="primary" 
+                                  onClick={() => { this.followPlaylist(e.original.id)
+                                  }}
+                                >Follow Playlist
+                                </Button> */}
+                              </div>,
                   style: { 'whiteSpace': 'unset' }
-                },
-                {
-                    Header: "Description",
-                    accessor: "description",
-                    style: { "whiteSpace": "unset" }
                 },
                 {
                     Header: "Owner",
@@ -130,7 +155,7 @@ class Table extends React.Component {
           ]}
           defaultPageSize={50}
           style={{
-            height: "1100px"
+            height: "1000px"
           }}
           className="-highlight"
           //className="Table-reactTable -striped -highlight"
