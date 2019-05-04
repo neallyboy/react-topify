@@ -1,6 +1,6 @@
 # Topify
 
-![](https://gitlab.com/topify/topify/blob/dev-neal/src/topify-w.png)
+![](/src/topify-w.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
