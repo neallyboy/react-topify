@@ -9,6 +9,7 @@ class Table extends React.Component {
   constructor(props){
     super(props);
       this.state={
+        track:'',
         playPopUp:false,
         playingUrl:'',
         audio:null,
@@ -16,8 +17,10 @@ class Table extends React.Component {
         buttonText:"Stop Preview"
       };
       this.playAudio = this.playAudio.bind(this);
+      this.showPlay = this.showPlay.bind(this);
     }
   
+  //Function to use the browser audio player
   playAudio( previewUrl ){
     let audio= new Audio( previewUrl );
     if( !this.state.playing ){
@@ -47,6 +50,14 @@ class Table extends React.Component {
       }
     }
 
+  //Function to display track sample as an overlay
+  showPlay(t) {
+    this.setState({playPopUp:true, track:t}, ()=>{
+      setTimeout(()=> this.setState({playPopUp:false}),1500);
+    });
+  }
+
+
   render() {
     let data = this.props.data;
     //console.log("data:",data)
@@ -65,6 +76,11 @@ class Table extends React.Component {
                   Header: "Playlist Image",
                     Cell: (row) => {
                         return  <div>
+                                  <h1 
+                                    className={`overlay ${this.state.playPopUp && "show"}`}
+                                  >
+                                  {this.state.playing === true && this.state.audio ? this.state.track : "Stopped"}
+                                  </h1>
                                   <Card className="Table-card card text-center" style={{ width: "15rem" }}>
                                     <Card.Img variant="top" src={row.original.imgUrl } />
                                     <Card.Body>
@@ -75,10 +91,11 @@ class Table extends React.Component {
                                         disabled={(!row.original.previewUrl) ? true : false }
                                         onClick={() => {
                                           this.playAudio(row.original.previewUrl);
+                                          this.showPlay(row.original.previewTrack);
                                         }}
                                       >
                                         { (!row.original.previewUrl) ? "No Preview Available" 
-                                          : this.state.playing === true & row.original.previewUrl === this.state.playingUrl ? "Stop Preview" 
+                                          : this.state.playing === true & row.original.previewUrl === this.state.playingUrl ?  "Stop Preview"
                                           : "Play Preview" }
                                       </Button>
                                     </Card.Body>
@@ -119,7 +136,7 @@ class Table extends React.Component {
           ]}
           defaultPageSize={50}
           style={{
-            height: "1000px"
+            // height: "1000px"
           }}
           className="-highlight"
           showPagination ={false}

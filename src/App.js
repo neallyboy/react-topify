@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from './Search';
 import logo from './topify-w.png';
+import brand from './topify-arrows.svg';
 import './App.css';
 import {Navbar, Button, Form, Nav} from 'react-bootstrap';
 import SpotifyWebApi from 'spotify-web-api-js';
@@ -35,8 +36,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar className="App-Navbar" bg="light" expand="lg">             
-          <Navbar.Brand>Topify</Navbar.Brand>
+        <Navbar className="App-Navbar" bg="light" expand="lg" fixed="top">             
+          <Navbar.Brand>
+          <img alt="" src={brand} width="30" height="30" className="d-inline-block align-top"/>
+          &nbsp;Topify
+          </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

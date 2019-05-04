@@ -34,12 +34,36 @@
 }
 
 .overlay {
-  transition: transform 0.6s ease-in-out;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20 rem;
+  transform: scale(0.1);
+  color: white;
+  opacity: 0;
 }
 
-.overlay:hover {
+.overlay.show {
   opacity: 1;
-  transform: scale(50);
-  z-index:10;
-  position: absolute;
+  transform: scale(1);
+  z-index:25;
+  position: fixed;
+  transition: all 0.4s ease-in-out;
+  transition-delay: 0.3s;
 }
+
+/* h1.overlay {
+  font-weight: 400;
+  text-shadow: 1px 2px black;
+  height:8%;
+  background: rgba(255,255,255,0.2);
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
+  padding: 1rem;
+} */
