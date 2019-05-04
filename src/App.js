@@ -36,12 +36,11 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar className="App-Navbar" bg="light" expand="lg">             
-          <Navbar.Brand href="http://localhost:3000">Topify</Navbar.Brand>
+          <Navbar.Brand>Topify</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                 <Nav.Link href="http://localhost:3000">Home</Nav.Link>
-                <Nav.Link href="#link">About Us</Nav.Link>
                 </Nav>
                 <Form inline>
                 <Button 
