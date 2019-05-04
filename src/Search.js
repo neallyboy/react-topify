@@ -45,7 +45,7 @@ class Search extends Component {
     //Get the simplified playlist objects
     let data = await response.data.playlists.items;
     
-    console.log(data)
+    console.log("Data:",data)
     
     //Loop through the data array containing the responses
     for(let i= 0; i < data.length; i++){
@@ -89,7 +89,8 @@ class Search extends Component {
           followers: findPlaylist.data.followers.total,
           totalTracks: data[i].tracks.total,
           totaltotalPlaylistDuration: this.millisToMinutesAndSeconds(totalPlaylistDuration),
-          previewUrl: findPlaylist.data.tracks.items[0].track.preview_url
+          previewUrl: findPlaylist.data.tracks.items[0].track.preview_url,
+          previewTrack: findPlaylist.data.tracks.items[0].track.name
         });
       }
     }
