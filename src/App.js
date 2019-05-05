@@ -49,7 +49,7 @@ class App extends Component {
                 <Form inline>
                 <Button 
                     variant={this.state.loggedIn === true ? 'success' : 'warning'}
-                    onClick={()=> this.getHashParams}
+                    //onClick={()=> this.getHashParams}
                     href={this.state.loggedIn === true ? 'http://localhost:3000' : 'http://localhost:8888/login'}
                 >
                   {this.state.loggedIn === true ? 'Log Out' : 'Login to Spotify'}
