@@ -9,6 +9,7 @@ class Table extends React.Component {
   constructor(props){
     super(props);
       this.state={
+        id: '',
         track:'',
         playPopUp:false,
         playingUrl:'',
@@ -21,11 +22,12 @@ class Table extends React.Component {
     }
   
   //Function to use the browser audio player
-  playAudio( previewUrl ){
+  playAudio( previewUrl, id ){
     let audio= new Audio( previewUrl );
     if( !this.state.playing ){
         audio.play();
         this.setState({
+          id: id,
           playing:true,
           playingUrl:previewUrl,
           audio
@@ -35,6 +37,7 @@ class Table extends React.Component {
         if( this.state.playingUrl === previewUrl ){
           this.state.audio.pause();
           this.setState({
+            id: '',
             playing: false
           })
         }
@@ -42,6 +45,7 @@ class Table extends React.Component {
           this.state.audio.pause();
           audio.play();
           this.setState({
+            id: id,
             playing:true,
             playingUrl:previewUrl,
             audio
@@ -53,7 +57,7 @@ class Table extends React.Component {
   //Function to display track sample as an overlay
   showPlay(t) {
     this.setState({playPopUp:true, track:t}, ()=>{
-      setTimeout(()=> this.setState({playPopUp:false}),1500);
+      setTimeout(()=> this.setState({playPopUp:false}),2500);
     });
   }
 
@@ -76,13 +80,13 @@ class Table extends React.Component {
                   Header: "Playlist Image",
                     Cell: (row) => {
                         return  <div>
-                                  <h1 
-                                    className={`overlay ${this.state.playPopUp && "show"}`}
-                                  >
-                                  {this.state.playing === true && this.state.audio ? this.state.track : "Stopped"}
-                                  </h1>
+                                  <div className={`overlay ${this.state.playPopUp && "show"}`}>
+                                    <h1>
+                                      {this.state.playing === true && this.state.audio ? `Playing: ${this.state.track}` : "Stopped Preview"}
+                                    </h1>
+                                  </div>
                                   <Card className="Table-card card text-center" style={{ width: "15rem" }}>
-                                    <Card.Img variant="top" src={row.original.imgUrl } />
+                                    <Card.Img className="Table-card-image" variant="top" src={row.original.imgUrl } />
                                     <Card.Body>
                                       <Button
                                         className="Table-button"
@@ -90,12 +94,14 @@ class Table extends React.Component {
                                         variant="primary" 
                                         disabled={(!row.original.previewUrl) ? true : false }
                                         onClick={() => {
-                                          this.playAudio(row.original.previewUrl);
+                                          this.playAudio(row.original.previewUrl, row.original.id);
                                           this.showPlay(row.original.previewTrack);
                                         }}
                                       >
                                         { (!row.original.previewUrl) ? "No Preview Available" 
-                                          : this.state.playing === true & row.original.previewUrl === this.state.playingUrl ?  "Stop Preview"
+                                          : this.state.playing === true 
+                                          & row.original.previewUrl === this.state.playingUrl 
+                                          & row.original.id === this.state.id ?  "Stop Preview"
                                           : "Play Preview" }
                                       </Button>
                                     </Card.Body>
@@ -106,13 +112,13 @@ class Table extends React.Component {
                 {
                   Header: "Playlist Name",
                   accessor: "playListName",
-                  Cell: e =>  <a href={e.original.link} rel="noopener noreferrer" target="_blank">{e.value}</a>,
+                  Cell: e =>  <a className="Table-link" href={e.original.link} rel="noopener noreferrer" target="_blank">{e.value}</a>,
                   style: { 'whiteSpace': 'unset' }
                 },
                 {
                     Header: "Owner",
                     accessor: "owner",
-                    Cell: e => <a href={e.original.ownerLink} rel="noopener noreferrer" target="_blank">{e.value}</a>
+                    Cell: e => <a className="Table-link" href={e.original.ownerLink} rel="noopener noreferrer" target="_blank">{e.value}</a>
                 },
                 {
                     Header: "Followers",
