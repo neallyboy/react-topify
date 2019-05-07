@@ -1,0 +1,82 @@
+.Table{
+  text-align: center;
+  width: 98%;
+}
+
+.-header {
+    font-size: 1.5em;
+  }
+
+.rt-td {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+}
+
+.ReactTable .rt-thead .rt-th.-sort-asc,
+.ReactTable .rt-thead .rt-td.-sort-asc {
+  box-shadow: inset 0 3px 0 0 rgba(255, 255, 255, 0.6)
+}
+
+.ReactTable .rt-thead .rt-th.-sort-desc,
+.ReactTable .rt-thead .rt-td.-sort-desc {
+  box-shadow: inset 0 -3px 0 0 rgba(255, 255, 255, 0.6)
+}
+
+.Table-card {
+    box-shadow: 7px 10px 12px -5px rgba(0,0,0,0.56);
+}
+
+.Table a {
+    cursor: pointer;
+}
+
+.Table-card-image {
+  width: 100%;
+  height: 10vw;
+  object-fit: cover;
+  position: relative;
+  z-index: 0;
+}
+
+.Table-card-image:hover {
+  background-color: transparent;
+  z-index: 50;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20 rem;
+  transform: scale(0.1);
+  color: white;
+  opacity: 0;
+  z-index:0;
+}
+
+.overlay.show {
+  opacity: 1;
+  transform: scale(1);
+  z-index:25;
+  position: fixed;
+  /* transition: all 0.3s ease-in-out; */
+  transition-delay: 0.3s;
+}
+
+.overlay.show h1{
+  font-weight: 400;
+  text-shadow: 1px 2px black;
+  background: rgba(44, 71, 114, 0.1);
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
+  padding: 1rem;
+}

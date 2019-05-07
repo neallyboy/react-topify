@@ -1,0 +1,10 @@
+.Search {
+    width: 99%;
+    text-align: center;
+}
+
+.Search-spinner {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}

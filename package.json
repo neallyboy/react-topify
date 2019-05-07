@@ -1,0 +1,37 @@
+{
+  "name": "topify",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "concurrently": "^4.1.0",
+    "cookie-parser": "^1.3.2",
+    "cors": "^2.8.4",
+    "express": "~4.16.0",
+    "querystring": "^0.2.0",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.8",
+    "react-dom": "^16.8.6",
+    "react-scripts": "2.1.8",
+    "react-table": "^6.10.0",
+    "request": "^2.83.0",
+    "spotify-web-api-js": "^0.22.1"
+  },
+  "scripts": {
+    "server": "cd server && node server.js",
+    "start": "concurrently -kill-others \"npm run server\" \"react-scripts start\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {}
+}
